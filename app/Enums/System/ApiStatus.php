@@ -32,7 +32,7 @@ namespace App\Enums\System;
 
   public static function options() : array
   {
-       return collect(self::cases())->mapWithKeys(fn($item) => [$item->value => $item->message()])->toArray()
+       return collect(self::cases())->mapWithKeys(fn($item) => [$item->value => $item->message()])->toArray();
   }
 
 }
