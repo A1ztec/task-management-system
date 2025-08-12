@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\task\TaskPriority;
+use App\Enums\Task\TaskStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -18,23 +20,19 @@ class Task extends Model
     ];
 
 
-    // protected function casts()
-    // {
+    protected function casts()
+    {
 
-    // // return [
-
-    // //     'status' => //enum ,
-    // //     'priority' => //enum,
-    // //     'due_date' => 'datetime'
-
-    // // ];
-    // // }
+        return [
+            'status' => TaskStatus::class,
+            'priority' => TaskPriority::class,
+            'due_date' => 'datetime'
+        ];
+    }
 
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-
-    
 }
