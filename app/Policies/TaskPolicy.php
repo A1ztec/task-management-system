@@ -14,7 +14,7 @@ class TaskPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin() || $user->tasks()->exists();
+        return $user->isAdmin();
     }
 
     /**
