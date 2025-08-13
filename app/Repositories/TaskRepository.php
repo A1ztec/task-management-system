@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Repositories;
+
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\TaskRepositoryInterface;
@@ -11,13 +13,16 @@ class TaskRepository implements TaskRepositoryInterface
     public function listAll(): mixed
     {
 
-        $query = Task::with('user')->filter()->paginate(15);
+        $query = Task::all()->with('user');
 
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
+
             $query->where('user_id', $user->id);
         }
+
+        $query->filter()->paginate(15);
 
         return $query;
     }
@@ -35,17 +40,17 @@ class TaskRepository implements TaskRepositoryInterface
         ]);
     }
 
-    public function update($data, Task $task): mixed
+    public function update($data, Task $task): Task
     {
 
-        $task =  $task->update($data);
+        $task->update($data);
 
-        return $task ; 
+        return $task;
     }
 
     public function delete(Task $task): bool
     {
 
-        return $task->detete();
+        return $task->delete();
     }
 }
