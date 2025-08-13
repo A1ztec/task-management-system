@@ -29,7 +29,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::before(function () {
-            Auth::User()->isAdmin();
+            if (Auth::User()->isAdmin()) {
+                return true;
+            }
         });
     }
 }
