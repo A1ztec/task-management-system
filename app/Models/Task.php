@@ -57,4 +57,20 @@ class Task extends Model
         }
         return $query;
     }
+
+
+    public function scopePending($query)
+    {
+        return $query->where('status', TaskStatus::PENDING);
+    }
+
+    public function scopeDone($query)
+    {
+        return $query->where('status', TaskStatus::DONE);
+    }
+
+    public function scopeInProgress($query)
+    {
+        return $query->where('status', TaskStatus::IN_PROGRESS);
+    }
 }
