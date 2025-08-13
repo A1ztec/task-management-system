@@ -94,6 +94,9 @@ class TaskController extends Controller
             $data = [
                 'status' => $data['status'] ?? $task->status
             ];
+            $data = array_filter($data, function ($value) {
+                return !is_null($value);
+            });
         }
         try {
             $this->authorize('update', $task);
