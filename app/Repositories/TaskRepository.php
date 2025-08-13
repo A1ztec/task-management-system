@@ -53,8 +53,33 @@ class TaskRepository implements TaskRepositoryInterface
     public function update($data, Task $task): Task
     {
 
-        $task->update($data);
-        $task = $task->fresh();
+        $updateData = [];
+
+        if (isset($data['title']) && !empty($data['title'])) {
+            $updateData['title'] = $data['title'];
+        }
+
+        if (isset($data['description']) && !empty($data['description'])) {
+            $updateData['description'] = $data['description'];
+        }
+
+        if (isset($data['priority']) && !empty($data['priority'])) {
+            $updateData['priority'] = $data['priority'];
+        }
+
+        if (isset($data['status']) && !empty($data['status'])) {
+            $updateData['status'] = $data['status'];
+        }
+
+        if (isset($data['due_date']) && !empty($data['due_date'])) {
+            $updateData['due_date'] = $data['due_date'];
+        }
+
+        if (!empty($updateData)) {
+            $task->update($updateData);
+            $task = $task->fresh();
+        }
+
         return $task;
     }
 
