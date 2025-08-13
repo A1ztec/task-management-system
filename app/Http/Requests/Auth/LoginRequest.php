@@ -33,6 +33,6 @@ class LoginRequest extends FormRequest
         return [
             'email.*' => __('Email Is Required And Must Be Exists in Our Records'),
             'password.*' => __('Password Required And Must Be String')
-        ]
+        ];
     }
 }
