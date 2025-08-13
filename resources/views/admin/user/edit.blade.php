@@ -17,6 +17,7 @@
                         <div class="card-body">
 
                             @include('partials.validation_errors')
+                            @include('flash::message')
 
                             <form method="post" action="{{ route('admin.users.update', $user)}}">
 
