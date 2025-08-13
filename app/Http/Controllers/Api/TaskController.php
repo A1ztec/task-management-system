@@ -56,6 +56,10 @@ class TaskController extends Controller
 
             $task = TaskResource::make($task);
 
+            log::info(message : __("Task Created Successfully") , context : [
+                'task_id' => $task->id,
+                'user_name' => auth()->user()->name,
+            ]);
             return $this->successResponse(message: __('Task Created Successfully'), data: $task);
         } catch (Exception $e) {
             return $this->logAndReturnErrorResponse($e->getMessage());
@@ -96,7 +100,10 @@ class TaskController extends Controller
             $task = $this->service->update($data, $task);
             $task = $task->load('user');
             $task = TaskResource::make($task);
-            Log::info(message: 'Task Updated Successfuly');
+            Log::info(message: 'Task Updated Successfuly', context: [
+                'task_id' => $task->id,
+                'user_name' => $user->name,
+            ]);
             return $this->successResponse(message: __('Task Updated Successfully'), data: $task);
         } catch (Exception $e) {
             return $this->logAndReturnErrorResponse($e->getMessage());
@@ -111,6 +118,10 @@ class TaskController extends Controller
         try {
             $this->authorize('delete', $task);
             $this->service->delete($task);
+            Log::info(message : __('Task Deleted Successfully') , context : [
+                'task_id' => $task->id,
+                'user_name' => auth()->user()->name,
+            ]);
             return $this->successResponse(message: __('Task Deleted Successfully'));
         } catch (Exception $e) {
             return  $this->logAndReturnErrorResponse($e->getMessage());
