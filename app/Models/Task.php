@@ -35,4 +35,24 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
+    public function scopeFilter($query)
+    {
+        if (request('status')) {
+            $query->where('status', request('status'));
+        }
+        if (request('priority')) {
+            $query->where('priority', request('priority'));
+        }
+        if (request('due_date')) {
+            $query->where('due_date', request('due_date'));
+        }
+        if (request('user')) {
+            $query->whereHas('user', function ($query) {
+                $query->whereIn('name', request('user'));
+            });
+        }
+        return $query;
+    }
 }
