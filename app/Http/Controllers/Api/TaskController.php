@@ -56,7 +56,7 @@ class TaskController extends Controller
 
             $task = TaskResource::make($task);
 
-            log::info(message : __("Task Created Successfully") , context : [
+            log::info(message: __("Task Created Successfully"), context: [
                 'task_id' => $task->id,
                 'user_name' => auth()->user()->name,
             ]);
@@ -118,7 +118,7 @@ class TaskController extends Controller
         try {
             $this->authorize('delete', $task);
             $this->service->delete($task);
-            Log::info(message : __('Task Deleted Successfully') , context : [
+            Log::info(message: __('Task Deleted Successfully'), context: [
                 'task_id' => $task->id,
                 'user_name' => auth()->user()->name,
             ]);
