@@ -6,6 +6,7 @@ use App\Enums\task\TaskPriority;
 use App\Enums\Task\TaskStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Policies\TaskPolicy;
 
 class Task extends Model
 {
