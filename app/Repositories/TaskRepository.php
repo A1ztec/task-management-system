@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Resources\Task\TaskResource;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\TaskRepositoryInterface;
@@ -32,7 +33,7 @@ class TaskRepository implements TaskRepositoryInterface
     public function create($data): Task
     {
 
-        return Task::create([
+        $task = Task::create([
             'title' => $data['title'],
             'description' => $data['description'],
             'priority' => $data['priority'],
@@ -40,6 +41,7 @@ class TaskRepository implements TaskRepositoryInterface
             'due_date' => $data['due_date'],
             'user_id' => $data['user_id'],
         ]);
+        return $task;
     }
 
 
@@ -52,7 +54,7 @@ class TaskRepository implements TaskRepositoryInterface
     {
 
         $task->update($data);
-
+        $task = $task->fresh();
         return $task;
     }
 
