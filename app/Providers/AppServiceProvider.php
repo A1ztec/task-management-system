@@ -45,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
             return null;
         });
 
-        Gate::define(UserRole::ADMIN->value, function () {
+        Gate::define('admin', function () {
             return auth()->user()->isAdmin();
         });
     }
