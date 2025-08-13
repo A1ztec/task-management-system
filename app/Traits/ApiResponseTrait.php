@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 
 trait ApiResponseTrait
 {
-    public function successResponse(int $code = 200, string $message = ('Success'), $data = null,)
+    public function successResponse(int $code = 200, string $message = 'Success', $data = null,)
     {
         return response()->json([
             'status' => ApiStatus::SUCCESS->value,
@@ -19,7 +19,7 @@ trait ApiResponseTrait
         ], $code);
     }
 
-    public function errorResponse(int $code = 500, string $message = __('Error')): JsonResponse
+    public function errorResponse(int $code = 500, string $message = 'Error'): JsonResponse
     {
         return response()->json([
             'status' => ApiStatus::ERROR->value,
@@ -29,7 +29,7 @@ trait ApiResponseTrait
     }
 
 
-    public function notFoundResponse(int $code = 404, string $message = __('Not Found'))
+    public function notFoundResponse(int $code = 404, string $message = 'Not Found')
     {
         return response()->json([
             'status' => ApiStatus::NOT_FOUND->value,
@@ -39,7 +39,7 @@ trait ApiResponseTrait
     }
 
 
-    public function validationErrorResponse(int $code = 422, string $message = __("Validation Failed"), $errors): JsonResponse
+    public function validationErrorResponse(int $code = 422, string $message = "Validation Failed", $errors): JsonResponse
     {
         return response()->json([
             'status' => ApiStatus::VALIDATION_FAILED->value,
@@ -50,7 +50,7 @@ trait ApiResponseTrait
     }
 
 
-    public function unAuthorizedResponse(int $code = 403, string $message = __('Unauthorized')): JsonResponse
+    public function unAuthorizedResponse(int $code = 403, string $message = 'Unauthorized'): JsonResponse
     {
         return response()->json([
             'status' => ApiStatus::UNAUTHORIZED->value,
