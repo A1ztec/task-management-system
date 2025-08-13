@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\User\UserResource;
 
 class AuthController extends Controller
 {
@@ -39,7 +40,7 @@ class AuthController extends Controller
             $token = $user->createToken($token_name)->plainTextToken;
 
             $data = [
-                'user' => $user,
+                'user' => UserResource::make($user),
                 'token' => $token
             ];
 
