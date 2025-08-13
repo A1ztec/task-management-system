@@ -10,7 +10,7 @@ use App\Services\UserService;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\user\CreateUserRequest;
 use App\Http\Requests\user\UpdateUserRequest;
 
 class UserController extends Controller
@@ -73,6 +73,9 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $data = $request->validated();
+        $data = array_filter($data, function ($value) {
+            return !is_null($value);
+        });
         try {
             $user = $this->service->update($data, $user);
             flash()->success('User Updated Successfully');
