@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\user;
+namespace App\Http\Requests\User;
 
 use App\Enums\User\UserRole;
 use Illuminate\Validation\Rule;
@@ -25,10 +25,10 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['nullable', 'string', 'max:255'],
-            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email,' . $this->user->id],
-            'password' => ['nullable', 'string', Password::min(8)->mixedCase()->numbers()->symbols(), 'confirmed'],
-            'role' => ['nullable', 'string', Rule::enum(UserRole::class)],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'email' => ['sometimes', 'string', 'email', 'max:255', 'unique:users,email,' . $this->user->id],
+            'password' => ['sometimes', 'string', Password::min(8)->mixedCase()->numbers()->symbols(), 'confirmed'],
+            'role' => ['sometimes', 'string', Rule::enum(UserRole::class)],
         ];
     }
 }
