@@ -18,9 +18,9 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!Auth::check() || !Auth::user()->isAdmin())
-        {
-            return redirect()->route('admin.auth.login')->with(['message' => __('unauthorized access')]);
+        if (!Auth::check() || !Auth::user()->isAdmin()) {
+            flash()->error(__('unauthorized access'));
+            return redirect()->route('admin.auth.login');
         }
         return $next($request);
     }
