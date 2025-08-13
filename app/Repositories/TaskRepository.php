@@ -42,6 +42,12 @@ class TaskRepository implements TaskRepositoryInterface
         ]);
     }
 
+
+    public function show($task): task
+    {
+        return $task;
+    }
+
     public function update($data, Task $task): Task
     {
 
