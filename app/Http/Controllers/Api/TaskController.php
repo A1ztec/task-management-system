@@ -5,17 +5,21 @@ namespace App\Http\Controllers\Api;
 use Exception;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use App\Services\TaskService;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\Task\TaskResource;
 use App\Http\Requests\Task\TaskRequest;
+use App\Http\Resources\Task\TaskResource;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TaskController extends Controller
 {
     use ApiResponseTrait, AuthorizesRequests;
+
+
+    public function __construct(public TaskService $service) {}
     /**
      * Display a listing of the resource.
      */
@@ -24,15 +28,7 @@ class TaskController extends Controller
         try {
             $this->authorize('viewAny');
 
-            $query = Task::with('user');
-            $user = Auth::user();
-
-            if (!$user->isAmin) {
-                $query->where('user_id', $user->id);
-            }
-            $tasks = $query->filter()->paginate(15);
-
-            $tasks = TaskResource::collection($tasks);
+            $tasks =  $this->service->listAll();
 
             return $this->successResponse(code: 200, message: __('Tasks Retrieved Successfully'), data: $tasks);
         } catch (Exception $e) {
@@ -52,14 +48,9 @@ class TaskController extends Controller
 
         try {
             $this->authorize('create');
-            $task =  Task::create([
-                'title' => $data['title'],
-                'description' => $data['description'],
-                'priority' => $data['priority'],
-                'status' => $data['status'],
-                'due_date' => $data['due_date'],
-                'user_id' => $data['user_id'],
-            ]);
+
+            $task =  $this->service->create($data);
+
             Log::info(message: 'task created successfuly');
 
             $task = TaskResource::make($task);
@@ -94,7 +85,7 @@ class TaskController extends Controller
         $data = $request->validated();
         try {
             $this->authorize('update', $task);
-            $task->update($data);
+            $task = $this->service->update($data, $task);
             $task = TaskResource::make($task->load('user'));
             Log::info(message: 'Task Updated Successfuly');
             return $this->successResponse(message: __('Task Updated Successfully'), data: $task);
@@ -110,7 +101,7 @@ class TaskController extends Controller
     {
         try {
             $this->authorize('delete', $task);
-            $task->delete();
+            $this->service->delete($task);
             return $this->successResponse(message: __('Task Deleted Successfully'));
         } catch (Exception $e) {
             return  $this->logAndReturnErrorResponse($e->getMessage());
