@@ -11,20 +11,26 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Task\TaskResource;
 use App\Http\Requests\Task\TaskRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TaskController extends Controller
 {
-    use ApiResponseTrait;
+    use ApiResponseTrait, AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $tasks =  Task::with('user')->filter()->paginate(15);
+        try {
+            $this->authorize('viewAny');
+            $tasks =  Task::with('user')->filter()->paginate(15);
 
-        $tasks = TaskResource::collection($tasks);
+            $tasks = TaskResource::collection($tasks);
 
-        return $this->successResponse(code: 200, message: _('Tasks Retrived Successfuly'), data: $tasks);
+            return $this->successResponse(code: 200, message: _('Tasks Retrived Successfuly'), data: $tasks);
+        } catch (Throwable $e) {
+            $this->logAndReturnErrorResponse($e->getMessage());
+        }
     }
 
     /**
@@ -33,10 +39,12 @@ class TaskController extends Controller
     public function store(TaskRequest $request)
     {
 
+
         $data = $request->validated();
 
         $user = Auth::user();
         try {
+            $this->authorize('create');
             $task =  Task::create([
                 'title' => $data['title'],
                 'description' => $data['description'],
@@ -51,8 +59,7 @@ class TaskController extends Controller
 
             return $this->successResponse(message: __('Task Created Successfuly'), data: $task);
         } catch (Throwable $e) {
-            Log::error(message: $e->getMessage());
-            return $this->errorResponse(message: $e->getMessage());
+            $this->logAndReturnErrorResponse($e->getMessage());
         }
     }
 
@@ -62,13 +69,13 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         try {
+            $this->authorize('view', $task);
             $task->load('user');
             $task = TaskResource::make($task);
 
-            return $this->successResponse(code: 200, message: __('Task Retrived Successfuly'));
+            return $this->successResponse(code: 200, message: __('Task Retrieved Successfuly'), data: $task);
         } catch (Throwable $e) {
-            Log::error(message: $e->getMessage());
-            return $this->errorResponse(message: $e->getMessage());
+            $this->logAndReturnErrorResponse($e->getMessage());
         }
     }
 
@@ -79,13 +86,13 @@ class TaskController extends Controller
     {
         $data = $request->validated();
         try {
-             $task->update([$data]);
-             $task = TaskResource::make($task->load('user'));
+            $this->authorize('update', $task);
+            $task->update($data);
+            $task = TaskResource::make($task->load('user'));
             Log::info(message: 'Task Updated Successfuly');
             return $this->successResponse(message: __('Task Updated Successfuly'), data: $task);
         } catch (Throwable $e) {
-            Log::error(message: $e->getMessage());
-            return $this->errorResponse(message : $e->getMessage());
+            $this->logAndReturnErrorResponse($e->getMessage());
         }
     }
 
@@ -94,7 +101,18 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        $task->delete();
-        return $this->successResponse(message : __('Task Deleted Successfuly'))
+        try {
+            $this->authorize('delete');
+            $task->delete();
+            return $this->successResponse(message: __('Task Deleted Successfuly'));
+        } catch (Throwable $e) {
+            $this->logAndReturnErrorResponse($e->getMessage());
+        }
+    }
+
+    private function logAndReturnErrorResponse(string $message)
+    {
+        Log::error(message: $message);
+        return $this->errorResponse(message: $message);
     }
 }
