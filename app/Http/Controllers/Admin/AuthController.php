@@ -26,7 +26,7 @@ class AuthController extends Controller
         $data = $request->validated();
         try {
             if (!Auth::attempt($data)) {
-                flash()->error(__('Wrong Credentials'));
+                flash()->error('Wrong Credentials');
                 return redirect()->back()->withInput(request()->only('email'));
             }
 
@@ -34,13 +34,13 @@ class AuthController extends Controller
                 Auth::logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
-                flash()->error(__('you are not authorized to access this panel'));
+                flash()->error('you are not authorized to access this panel');
                 return redirect()->back()->withInput(request()->only('email'));
             }
 
             $request->session()->regenerate();
 
-            flash()->success(__('Welcome, :name', ['name' => auth()->user()->name]));
+            flash()->success('Welcome,  '   . auth()->user()->name);
             return redirect()->route('admin.dashboard');
         } catch (Exception $e) {
             Log::error(message: $e->getMessage());
@@ -56,7 +56,7 @@ class AuthController extends Controller
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
-        flash()->success(__('user Logged Out Successfully'));
+        flash()->success('user Logged Out Successfully');
         return redirect()->route('admin.auth.login');
     }
 }
