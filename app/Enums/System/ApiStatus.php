@@ -22,7 +22,7 @@ enum ApiStatus: string
         return match ($this) {
 
             self::SUCCESS => __('Request Successful'),
-            self::ERROR => __('Error Accurred'),
+            self::ERROR => __('Error Occurred'),
             self::VALIDATION_FAILED => __('Validation Failed'),
             self::UNAUTHORIZED => __('Unauthorized Access'),
             self::NOT_FOUND => __('Resource Not Found')
