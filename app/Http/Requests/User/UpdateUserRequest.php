@@ -25,10 +25,10 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['nullable', 'string', 'max:255'],
-            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email,' . $this->user->id],
-            'password' => ['nullable', 'string', Password::min(8)->mixedCase()->numbers()->symbols(), 'confirmed'],
-            'role' => ['nullable', 'string', Rule::enum(UserRole::class)],
+            'name' => ['optional', 'string', 'max:255'],
+            'email' => ['optional', 'string', 'email', 'max:255', 'unique:users,email,' . $this->user->id],
+            'password' => ['optional', 'string', Password::min(8)->mixedCase()->numbers()->symbols(), 'confirmed'],
+            'role' => ['optional', 'string', Rule::enum(UserRole::class)],
         ];
     }
 }
