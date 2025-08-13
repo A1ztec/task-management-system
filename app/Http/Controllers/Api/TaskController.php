@@ -32,7 +32,7 @@ class TaskController extends Controller
 
             return $this->successResponse(code: 200, message: __('Tasks Retrieved Successfully'), data: $tasks);
         } catch (Exception $e) {
-            $this->logAndReturnErrorResponse($e->getMessage());
+            return $this->logAndReturnErrorResponse($e->getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ class TaskController extends Controller
 
             return $this->successResponse(message: __('Task Created Successfully'), data: $task);
         } catch (Exception $e) {
-            $this->logAndReturnErrorResponse($e->getMessage());
+            return $this->logAndReturnErrorResponse($e->getMessage());
         }
     }
 
@@ -73,7 +73,7 @@ class TaskController extends Controller
 
             return $this->successResponse(code: 200, message: __('Task Retrieved Successfully'), data: $task);
         } catch (Exception $e) {
-            $this->logAndReturnErrorResponse($e->getMessage());
+            return $this->logAndReturnErrorResponse($e->getMessage());
         }
     }
 
@@ -90,7 +90,7 @@ class TaskController extends Controller
             Log::info(message: 'Task Updated Successfuly');
             return $this->successResponse(message: __('Task Updated Successfully'), data: $task);
         } catch (Exception $e) {
-            $this->logAndReturnErrorResponse($e->getMessage());
+            return $this->logAndReturnErrorResponse($e->getMessage());
         }
     }
 
