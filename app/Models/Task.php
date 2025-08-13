@@ -40,16 +40,16 @@ class Task extends Model
 
     public function scopeFilter($query)
     {
-        if (request('status')) {
+        if (request()->filled('status')) {
             $query->where('status', request('status'));
         }
-        if (request('priority')) {
+        if (request()->filled('priority')) {
             $query->where('priority', request('priority'));
         }
-        if (request('due_date')) {
+        if (request()->filled('due_date')) {
             $query->where('due_date', request('due_date'));
         }
-        if (request('user')) {
+        if (request()->filled('user')) {
             $query->whereHas('user', function ($query) {
                 $query->whereIn('name', request('user'));
             });
