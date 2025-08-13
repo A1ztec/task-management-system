@@ -42,7 +42,7 @@ class TaskController extends Controller
 
         $data = $request->validated();
 
-        $user = Auth::user();
+        
         try {
             $this->authorize('create');
             $task =  Task::create([
