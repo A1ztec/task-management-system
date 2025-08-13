@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use Exception;
+use Exception ;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Services\TaskService;
@@ -108,9 +108,5 @@ class TaskController extends Controller
         }
     }
 
-    private function logAndReturnErrorResponse(string $message)
-    {
-        Log::error(message: $message);
-        return $this->errorResponse(message: $message);
-    }
+
 }
