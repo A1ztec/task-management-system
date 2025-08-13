@@ -13,7 +13,7 @@ class TaskRepository implements TaskRepositoryInterface
     public function listAll(): mixed
     {
 
-        $query = Task::all()->with('user');
+        $query = Task::with('user');
 
         $user = Auth::user();
 
