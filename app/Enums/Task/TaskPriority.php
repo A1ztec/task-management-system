@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Enums\task;
+namespace App\Enums\Task;
 
 
 enum TaskPriority: string
