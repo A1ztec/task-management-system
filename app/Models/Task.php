@@ -49,10 +49,8 @@ class Task extends Model
         if (request()->filled('due_date')) {
             $query->where('due_date', request('due_date'));
         }
-        if (request()->filled('user')) {
-            $query->whereHas('user', function ($query) {
-                $query->whereIn('name', request('user'));
-            });
+        if (request()->filled('user_id')) {
+            $query->where('user_id', request('user_id'));
         }
         return $query;
     }
