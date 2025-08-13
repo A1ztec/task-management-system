@@ -22,7 +22,9 @@ class TaskRepository implements TaskRepositoryInterface
             $query->where('user_id', $user->id);
         }
 
-        $query->filter()->paginate(15);
+        $query =  $query->filter()->paginate(15);
+
+        //dd($query->tosql());
 
         return $query;
     }
