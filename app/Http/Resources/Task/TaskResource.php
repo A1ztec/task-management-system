@@ -16,14 +16,14 @@ class TaskResource extends JsonResource
     public function toArray(Request $request): array
     {
         return
-        [
-            'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description,
-            'status' => $this->status->value,
-            'priority' => $this->priority->value,
-            'due_date' => $this->due_date,
-            'user' => UserResource::class($this->whenLoaded('user'))
-        ];
+            [
+                'id' => $this->id,
+                'title' => $this->title,
+                'description' => $this->description,
+                'status' => $this->status->value,
+                'priority' => $this->priority->value,
+                'due_date' => $this->due_date,
+                'user' => UserResource::make($this->whenLoaded('user'))
+            ];
     }
 }
