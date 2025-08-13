@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enums\User\UserRole;
 use App\Services\TaskService;
 use App\Repositories\TaskRepository;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
             return null;
+        });
+
+        Gate::define(UserRole::ADMIN->value, function () {
+            return auth()->user()->isAdmin();
         });
     }
 }
