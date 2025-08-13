@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use Exception ;
+use Exception;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Services\TaskService;
@@ -26,9 +26,12 @@ class TaskController extends Controller
     public function index()
     {
         try {
-            $this->authorize('viewAny');
+            $this->authorize('viewAny', Task::class);
 
             $tasks =  $this->service->listAll();
+
+            //dd($tasks);
+            $tasks = TaskResource::collection($tasks);
 
             return $this->successResponse(code: 200, message: __('Tasks Retrieved Successfully'), data: $tasks);
         } catch (Exception $e) {
@@ -42,12 +45,10 @@ class TaskController extends Controller
     public function store(TaskRequest $request)
     {
 
-
         $data = $request->validated();
 
-
         try {
-            $this->authorize('create');
+            $this->authorize('create', Task::class);
 
             $task =  $this->service->create($data);
 
@@ -68,6 +69,7 @@ class TaskController extends Controller
     {
         try {
             $this->authorize('view', $task);
+            $task = $this->service->show($task);
             $task->load('user');
             $task = TaskResource::make($task);
 
@@ -83,10 +85,17 @@ class TaskController extends Controller
     public function update(TaskRequest $request, Task $task)
     {
         $data = $request->validated();
+        $user = Auth::user();
+        if (!$user->isAdmin()) {
+            $data = [
+                'status' => $data['status'] ?? $task->status
+            ];
+        }
         try {
             $this->authorize('update', $task);
             $task = $this->service->update($data, $task);
-            $task = TaskResource::make($task->load('user'));
+            $task = $task->load('user');
+            $task = TaskResource::make($task);
             Log::info(message: 'Task Updated Successfuly');
             return $this->successResponse(message: __('Task Updated Successfully'), data: $task);
         } catch (Exception $e) {
@@ -107,6 +116,4 @@ class TaskController extends Controller
             return  $this->logAndReturnErrorResponse($e->getMessage());
         }
     }
-
-
 }
