@@ -34,8 +34,32 @@ class UserRepository implements UserRepositoryInterface
 
     public function update($data, User $user): User
     {
-        $user->update($data);
-        $user = $user->fresh();
+        $updateData = [];
+
+
+        if (isset($data['name']) && !empty($data['name'])) {
+            $updateData['name'] = $data['name'];
+        }
+
+        if (isset($data['email']) && !empty($data['email'])) {
+            $updateData['email'] = $data['email'];
+        }
+
+        if (isset($data['role']) && !empty($data['role'])) {
+            $updateData['role'] = $data['role'];
+        }
+
+
+        if (isset($data['password']) && !empty($data['password'])) {
+            $updateData['password'] = Hash::make($data['password']);
+        }
+
+
+        if (!empty($updateData)) {
+            $user->update($updateData);
+            $user = $user->fresh();
+        }
+
         return $user;
     }
 
