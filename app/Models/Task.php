@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
-use App\Enums\Task\TaskPriority;
+use App\Policies\TaskPolicy;
 use App\Enums\Task\TaskStatus;
+use App\Enums\Task\TaskPriority;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Policies\TaskPolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 
+
+#[UsePolicy(TaskPolicy::class)]
 class Task extends Model
 {
     protected $fillable = [
