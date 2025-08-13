@@ -60,7 +60,7 @@
                                 <div class="form-group">
                                     <label for="due_date" class="form-label">Due Date</label>
                                     <input type="date" name="due_date" class="form-control" id="due_date"
-                                        value="{{ $task->due_date }}">
+                                        value="{{ $task->due_date ? $task->due_date->format('Y-m-d') : '' }}">
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Submit</button>
