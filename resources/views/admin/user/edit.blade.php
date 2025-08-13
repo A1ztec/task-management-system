@@ -38,7 +38,7 @@
                                 <div class="form-group mb-3">
                                     <select name="role" class="form-select">
                                         @foreach(App\Enums\User\UserRole::options() as $value => $title)
-                                            <option value="{{ $value }}" @if($user->role === $value) selected @endif>
+                                            <option value="{{ $value }}" {{ $user->role->value === $value ? 'selected' : '' }}>
                                                 {{ $title }}
                                             </option>
                                         @endforeach
