@@ -4,7 +4,6 @@
 namespace App\Services;
 
 use App\Models\Task;
-use App\Repositories\BaseTaskRepository;
 use App\Repositories\TaskRepositoryInterface;
 
 class TaskService
@@ -26,9 +25,9 @@ class TaskService
     }
 
 
-    public function update($data, Task $task) : Task
+    public function update($data, Task $task): Task
     {
-      return $this->repository->update($data, $task);
+        return $this->repository->update($data, $task);
     }
 
     public function delete(Task $task)
