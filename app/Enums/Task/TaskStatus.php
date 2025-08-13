@@ -12,6 +12,16 @@ enum TaskStatus: string
     case DONE = 'done';
 
 
+    public function title(): string
+    {
+        return match ($this) {
+            self::PENDING => __('Pending'),
+            self::IN_PROGRESS => __('In Progress'),
+            self::DONE => __('Done'),
+        };
+    }
+
+
 
     public function message(): string
     {
@@ -26,6 +36,6 @@ enum TaskStatus: string
 
     public static function options(): array
     {
-        return collect(self::cases())->mapWithKeys(fn($item) => [$item->value => $item->message()])->toArray();
+        return collect(self::cases())->mapWithKeys(fn($item) => [$item->value => $item->title()])->toArray();
     }
 }
