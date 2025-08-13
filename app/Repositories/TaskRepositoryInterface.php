@@ -11,7 +11,7 @@ interface TaskRepositoryInterface
 
     public function create($data): Task;
 
-    public function update($data, Task $task): mixed;
+    public function update($data, Task $task): Task;
 
     public function delete(Task $task): bool;
 }
