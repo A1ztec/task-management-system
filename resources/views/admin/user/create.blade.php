@@ -23,11 +23,11 @@
 
                             <div class="form-group mb-3">
                                 <label for="name" class="form-label">name</label>
-                                <input type="text" name="name" class="form-control" id="name" placeholder="Enter name">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Enter name" value="{{old('name')}}">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="label" class="form-label">email</label>
-                                <input name="email" class="form-control" id="email" placeholder="Enter content">
+                                <input name="email" class="form-control" id="email" placeholder="Enter Email" value="{{old('email')}}">
                             </div>
 
                             <div class="form-group mb-3">
@@ -61,4 +61,5 @@
         </div>
     </div>
 </section>
+@endsection
 <!-- /.content -->
