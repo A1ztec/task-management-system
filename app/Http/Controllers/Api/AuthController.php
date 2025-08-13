@@ -21,6 +21,8 @@ class AuthController extends Controller
     {
         $data = $request->validated();
 
+
+
         try {
             $user = User::where('email', $data['email'])->first();
 
@@ -32,7 +34,7 @@ class AuthController extends Controller
                 return $this->errorResponse(message: __('Wrong Credintials'));
             }
 
-            $token_name = $user->name . now() . 'login_token';
+            $token_name = $user->name . '_login_api_token';
             $user->tokens()->where('name', $token_name)->delete();
             $token = $user->createToken($token_name)->plainTextToken;
 
