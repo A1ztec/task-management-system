@@ -1,0 +1,40 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Task 1",
+      "description": "Description for Task 1",
+      "status": "pending",
+      "priority": "high",
+      "due_date" : "2025-01-08",
+      "user_id": 1
+    },
+    {
+      "id": 2,
+      "title": "Task 2",
+      "description": "Description for Task 2",
+      "status": "in_progress",
+      "priority": "medium",
+      "due_date" : "2025-09-02",
+      "user_id": 2
+    },
+    {
+      "id": 3,
+      "title": "Task 3",
+      "description": "Description for Task 3",
+      "status": "done",
+      "priority": "low",
+      "due_date" : "2025-06-05",
+      "user_id": 3
+    },
+    {
+      "id": 4,
+      "title": "Task 4",
+      "description": "Description for Task 4",
+      "status": "pending",
+      "priority": "low",
+      "due_date" : "2025-08-12",
+      "user_id": 4
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+    "users" : [
+  {
+    "id": 1,
+    "name": "bassem tarek",
+    "email": "bassemtarek@example.com",
+    "role": "admin"
+  },
+  {
+    "id": 2,
+    "name": "yasmin samy",
+    "email": "yasminsamyh@example.com",
+    "role": "user"
+  },
+  {
+    "id": 3,
+    "name": "Youssef Mohamed",
+    "email": "YoussefMohamed@example.com",
+    "role": "user"
+  },
+  {
+    "id": 4,
+    "name": "Ahmed Mohsen",
+    "email": "AhmedMohsen@example.com",
+    "role": "user"
+  }
+]
+}
