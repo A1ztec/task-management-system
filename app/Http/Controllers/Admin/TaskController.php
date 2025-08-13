@@ -8,12 +8,19 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\TaskService;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\Task\TaskRequest;
 
 class TaskController extends Controller
 {
 
-    public function __construct(public TaskService $service) {}
+
+    public function __construct(public TaskService $service)
+    {
+        if (!Gate::allows('admin.tasks.*')) {
+            abort(403);
+        }
+    }
 
     public function listAll()
     {
@@ -57,7 +64,7 @@ class TaskController extends Controller
     {
         $data = $request->validated();
         try {
-            $this->service->update($task, $data);
+            $this->service->update(data: $data, task: $task);
             flash()->success('Task Updated Successfully');
             return redirect()->route('admin.tasks.index');
         } catch (Exception $e) {
