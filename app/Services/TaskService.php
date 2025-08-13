@@ -18,6 +18,11 @@ class TaskService
         return $this->repository->listAll();
     }
 
+    public function show(Task $task): Task
+    {
+        return  $this->repository->show($task);
+    }
+
 
     public function create($data)
     {
