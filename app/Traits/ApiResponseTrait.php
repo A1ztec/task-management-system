@@ -5,6 +5,7 @@ namespace App\Traits;
 
 use App\Enums\System\ApiStatus;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 trait ApiResponseTrait
 {
@@ -56,5 +57,12 @@ trait ApiResponseTrait
             'message' => $message,
             'code' => $code,
         ], $code);
+    }
+
+
+    public  function logAndReturnErrorResponse(string $message)
+    {
+        Log::error(message: $message);
+        return $this->errorResponse(message: $message);
     }
 }
