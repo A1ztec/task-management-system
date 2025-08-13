@@ -17,7 +17,7 @@ class TaskController extends Controller
 
     public function __construct(public TaskService $service)
     {
-        if (!Gate::allows('admin.tasks.*')) {
+        if (!Gate::allows('admin')) {
             abort(403);
         }
     }
