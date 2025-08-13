@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\task\TaskPriority;
+use App\Enums\Task\TaskPriority;
 use App\Enums\Task\TaskStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
