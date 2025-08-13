@@ -27,7 +27,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => ['sometimes', 'string', 'max:255'],
             'email' => ['sometimes', 'string', 'email', 'max:255', 'unique:users,email,' . $this->user->id],
-            'password' => ['sometimes', 'string', Password::min(8)->mixedCase()->numbers()->symbols(), 'confirmed'],
+            'password' => ['nullable', 'string', Password::min(8)->mixedCase()->numbers()->symbols()],
             'role' => ['sometimes', 'string', Rule::enum(UserRole::class)],
         ];
     }
