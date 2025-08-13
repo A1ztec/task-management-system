@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Services\TaskService;
 use App\Repositories\TaskRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\TaskRepositoryInterface;
 
@@ -26,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::before(function () {
+            Auth::User()->isAdmin();
+        });
     }
 }
