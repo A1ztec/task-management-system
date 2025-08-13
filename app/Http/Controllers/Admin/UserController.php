@@ -9,14 +9,15 @@ use Illuminate\Http\Request;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\UserRequest;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\user\UpdateUserRequest;
 
 class UserController extends Controller
 {
     public function __construct(private UserService $service)
     {
-        if (!Gate::allows(UserRole::ADMIN->value)) {
+        if (!Gate::allows('admin')) {
             abort(403);
         }
     }
@@ -40,20 +41,26 @@ class UserController extends Controller
         return view('admin.user.create');
     }
 
-    public function store(UserRequest $request)
+    public function store(CreateUserRequest $request)
     {
         $data = $request->validated();
         try {
             $user = $this->service->create($data);
-            flash()->success('User Create Successfully');
+            flash()->success('User Created Successfully');
             Log::info(message: 'User Created Successfully', context: [
                 'created_user_id' => $user->id,
                 'creator_Id' => auth()->id(),
             ]);
+            return redirect()->route('admin.users.index');
         } catch (Exception $e) {
             flash()->error($e->getMessage());
             Log::error('failed to create user', [
                 'error' => $e->getMessage(),
+            ]);
+            return redirect()->route('admin.users.create')->withInput([
+                'email' => old('email'),
+                'name' => old('name'),
+                'role' => old('role'),
             ]);
         }
     }
@@ -63,12 +70,12 @@ class UserController extends Controller
         return view('admin.user.edit', ['user' => $user]);
     }
 
-    public function update(UserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $data = $request->validated();
         try {
             $user = $this->service->update($data, $user);
-            flash()->success('user Created Successfully');
+            flash()->success('User Updated Successfully');
             Log::info(message: "User Updated Successfully", context: [
                 'admin_who_updated' => auth()->id(),
                 'updated_user_id' => $user->id,
@@ -79,7 +86,7 @@ class UserController extends Controller
             Log::error('failed to update user', [
                 'error' => $e->getMessage(),
             ]);
-            return redirect()->route('admin.users.index');
+            return redirect()->route('admin.users.edit', $user);
         }
     }
     public function destroy(User $user)
