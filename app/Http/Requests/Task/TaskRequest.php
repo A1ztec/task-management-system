@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Task;
 
-use App\Enums\task\TaskPriority;
+use App\Enums\Task\TaskPriority;
 use App\Enums\Task\TaskStatus;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Enum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TaskRequest extends FormRequest
