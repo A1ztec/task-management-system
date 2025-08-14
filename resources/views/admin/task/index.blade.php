@@ -34,6 +34,36 @@
                     </a>
                 </div>
 
+
+                <form method="GET" action="{{ route('admin.tasks.index') }}" class="mb-3">
+                    <div class="row g-2">
+                        <div class="col-md-3">
+                            <select name="status" class="form-control">
+                                <option value="">All Statuses</option>
+                                <option value="pending" {{ request()->get('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="completed" {{ request()->get('status') == 'completed' ? 'selected' : '' }}>Completed
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select name="priority" class="form-control">
+                                <option value="">All Priorities</option>
+                                <option value="low" {{ request()->get('priority') == 'low' ? 'selected' : '' }}>Low</option>
+                                <option value="medium" {{ request()->get('priority') == 'medium' ? 'selected' : '' }}>Medium</option>
+                                <option value="high" {{ request()->get('priority') == 'high' ? 'selected' : '' }}>High</option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </div>
+                        <div class="col-auto">
+                            <a href="{{ route('admin.tasks.index') }}" class="btn btn-secondary">
+                                <i class="fa fa-filter"></i> Clear Filters
+                            </a>
+                        </div>
+                    </div>
+                </form>
+
                 @if($tasks->count())
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
@@ -86,7 +116,7 @@
                         No data available.
                     </div>
                 @endif
-            </div>
+            </>
         </div>
     </section>
 @endsection
