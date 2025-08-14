@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use Exception;
 use App\Models\Task;
 use App\Models\User;
+use App\Exports\TasksExport;
 use Illuminate\Http\Request;
 use App\Services\TaskService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\Task\TaskRequest;
 
 class TaskController extends Controller
@@ -83,5 +85,13 @@ class TaskController extends Controller
             flash()->error($e->getMessage());
             return redirect()->route('admin.tasks.index');
         }
+    }
+
+
+    public function export()
+    {
+
+        flash()->success('Tasks Exported Successfully');
+        return Excel::download(new TasksExport, 'tasks.xlsx');
     }
 }
