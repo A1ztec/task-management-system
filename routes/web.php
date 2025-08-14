@@ -34,6 +34,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
         Route::prefix('tasks')->name('tasks.')->controller(TaskController::class)->group(function () {
+            Route::get('/export', 'export')->name('export');
             Route::get('/', 'listAll')->name('index');
             Route::get('/create', 'create')->name('create');
             Route::post('/', 'store')->name('store');
