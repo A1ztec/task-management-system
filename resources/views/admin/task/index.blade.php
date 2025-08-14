@@ -28,6 +28,11 @@
                     </a>
                 </div>
 
+                <div class="mb-3">
+                    <a href="{{ route('admin.tasks.export') }}" class="btn btn-secondary">
+                        <i class="fa fa-file-excel"></i> Export Tasks
+                    </a>
+                </div>
 
                 @if($tasks->count())
                     <div class="table-responsive">
