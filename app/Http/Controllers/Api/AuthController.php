@@ -34,9 +34,7 @@ class AuthController extends Controller
             if (!Hash::check($data['password'], $user->password)) {
                 return $this->errorResponse(message: __('Wrong Credintials'));
             }
-
             $token_name = $user->name . '_login_api_token';
-            $user->tokens()->where('name', $token_name)->delete();
             $token = $user->createToken($token_name)->plainTextToken;
 
             $data = [
